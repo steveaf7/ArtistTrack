@@ -1,8 +1,7 @@
 # ArtistTrack
-Artist Track is an music application written in Python, using the Django framework. 
 
 ## Introduction
-Users can enter the music they like into a database, and organize it into playlists. A user of Artist Track can also get lyrics for any song on the internet, and artist information provided by scraping the artist's wikipedia page.  
+Artist Track is an music application written in Python, using the Django framework. Users can enter the music they like into a database, and organize it into playlists. Users can edit and delete songs, and this application could be built using Spotify's API, so users can log in to their spotify account and play their music. A user of Artist Track can also get lyrics for any song on the internet, and artist information provided by scraping the artist's wikipedia page.  
 
 ### Stories
 * [Create](#create)
@@ -14,7 +13,7 @@ Users can enter the music they like into a database, and organize it into playli
 * [Skills](#skills)
 
 ### Create
-After creating the basic app, I was tasked with creating the database model. I chose a many to many relationship between my tables, because I wanted to be able to have a song on multiple playlists, and vice versa. After some feedback, it seemed better for the year field to have a drop down with choices, instead of having to enter it in manually, so I used list comprehension to create a list of years from 1950 to 2022, and I made it descending so that the more common recent years would be closer for selection.  
+After creating the basic app, I was tasked with creating the database model. I chose a many to many relationship between my tables, because a playlist should be able to have many songs, and a song should be able to be on multiple playlists. After some feedback, it seemed better for the year field to have a drop down with choices, instead of having to enter it in manually, so I used list comprehension to create a list of years from 1950 to 2022, and I made it descending so that the more common recent years would be closer for selection.  
 
 ```
 class Song(models.Model):
