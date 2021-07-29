@@ -1,16 +1,22 @@
 # ArtistTrack
-Artist Track is an application I created during the two week Python Live Project sprint at the Tech Academy
+Artist Track is an music application written in Python, using the Django framework. 
 
-### Introduction
-For my live project, I choose to create an app where users can enter the music they like into a database, and organize it into playlists. This turned into an app that also gets lyrics for any song on the internet, and provides artist information. This was a great opportunity for me to get some hands on experience with Django, to get more comfortable with version control, and learn to utilize feedback from others for improving my coding skills. Below are descriptions of some of the stories I worked on, along with code snippets. 
+## Introduction
+Users can enter the music they like into a database, and organize it into playlists. A user of Artist Track can also get lyrics for any song on the internet, and artist information provided by scraping the artist's wikipedia page.  
 
-### CRUD functionality
+### Stories
+* [Create](#create)
+* [Read](#read)
+* [Update and Delete](#update-and-delete)
+* [Web Scraping](#web-scraping)
+* [API](#api)
+* [Front End Development](#front-end-development)
+* [Skills](#skills)
 
-#### Create
+### Create
 After creating the basic app, I was tasked with creating the database model. I chose a many to many relationship between my tables, because I wanted to be able to have a song on multiple playlists, and vice versa. After some feedback, it seemed better for the year field to have a drop down with choices, instead of having to enter it in manually, so I used list comprehension to create a list of years from 1950 to 2022, and I made it descending so that the more common recent years would be closer for selection.  
 
 ```
-
 class Song(models.Model):
     GENRE_CHOICES = (
         ('rock', 'rock'),
@@ -47,11 +53,10 @@ class Playlist(models.Model):
 
 ```
 
-#### Read
+### Read
 Stories 3 and 4 involved displaying and editting the information entered into the database from the user. I created a library page that would display songs, organized by playlists, using Django Template Language and a nested for loop. I also created a page where all songs in the database are displayed in a table with columns for artist, title, album, genre, and year.
 
 ```
-
 <div class="at-library-container">
 {% for playlist in playlists %}
     <div class="at-opaque-container at-playlist-table ">
@@ -77,12 +82,11 @@ Stories 3 and 4 involved displaying and editting the information entered into th
 
 ```
 
-#### Update and Delete
-Story 5 was to create a page for editting and deleting items from the database. For this I created Django forms for both tables. The widgets allow me to style the form. I also added delete functionality for both tables, including a confirm delete page. 
+### Update and Delete
+Here I created a page for editting and deleting items from the database. For this I created Django forms for both tables. The widgets allow me to style the form. I also added delete functionality for both tables, including a confirm delete page. 
 
 
 ```
-
 class SongForm(ModelForm):
     class Meta:
         model = Song
@@ -110,7 +114,7 @@ class PlaylistForm(ModelForm):
         
 ```
 
-#### Web Scraping
+### Web Scraping
 Stories 6 and 7 involved web scraping. For this, I decided to use wikipedia, since they allow web scraping and have information on a lot of artists. I was able to set up a view function that takes the artist and title that the user selected from the database, adds it to the wikipedia base url and gets the page. From there, I used beautiful soup to find the first three paragraphs, which contain the general artist information, and extract the plain text out for display on the artist info page. At first, if the user clicked on the link to this page, and results were not found, nothing would happen, so I added timeout=20, and wrapped the request in a try/catch statement so if the request times out, or the information is not found, the user is routed to the artist info page and a message is displayed.
 
 ``` 
@@ -150,7 +154,7 @@ def at_artist_info(request, pk):
 
 ```
 
-#### API
+### API
 I was tasked with using an API for this project. I chose lyrics.ovh, that gets the lyrics for any song on the internet. The function takes the artist and title of a song entered by the user into the database, and grabs the lyrics for that song, translates them into a readable format and prints them to the template. Later, I added some functionality, by saving the lyrics to the database, and wrapping the whole thing in a if statement, so if the user has already gotten the lyrics once, there is no need to make another API call, it simply prints the lyrics from the database. 
 
 ```
@@ -196,11 +200,10 @@ def at_lyrics_api(request, pk):
         
  ```
  
-#### Front End Development
-For the library page, I got to know flexbox well, utilizing CSS to display containers of playlists that could potentially contain hundreds of songs all together on the same page. I utilized bootstrap as well as my own CSS to get the look I wanted. Here is the navbar template. I utilized Django Template Language again, to keep the current page highlighted on the navbar.
+### Front End Development
+For the library page, I, utilized flexbox in CSS to display containers of playlists that could potentially contain hundreds of songs all together on the same page. I utilized bootstrap as well as my own CSS to get the look I wanted. Here is the navbar template. I utilized Django Template Language again, to keep the current page highlighted on the navbar.
 
 ![image](https://user-images.githubusercontent.com/80490144/121760980-4c82eb00-cae2-11eb-9abc-2732edce6b88.png)
-
 
 ```
 
@@ -225,14 +228,13 @@ For the library page, I got to know flexbox well, utilizing CSS to display conta
 
 ```
 
-#### Skills Acquired
+### Skills
 * Working with Agile/Scrum methodology, including breaking down a project into easily digestable parts, and working on the parts. 
 * Explaining code with daily standups and daily reports,  
-* Communicating with instructors to ask for help, guidance, and to manage time. 
-* Using GitHub to manage edits, checkout branches, make pull requests, and rolling back when necessary. 
-* importing modules, to utilize in different templates. 
-* transfering data from page to page using a primary key in the url. 
-* utilizing django messages to display a confirm message. 
+* Communicating with developers and project managers to ask for help, guidance, and to manage time. 
+* Using Git to manage edits, checkout branches, make pull requests, and rolling back when necessary. 
+* Using view functions to get data from the databse, and send it to a view for display. 
+* Utilizing django messages to display a confirm message. 
 Put this in the view function. 
 ```
     messages.add_message(request, messages.SUCCESS,  'Song "{}" Saved To Library'.format(song_name))
